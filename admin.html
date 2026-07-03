@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Admin — AI Registrations</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+        body {
+            overflow: auto;
+        }
+
+        .admin-page {
+            min-height: 100vh;
+            padding: 32px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at 50% 0%, #0d2450 0%, var(--sky) 65%);
+            position: relative;
+            z-index: 1;
+        }
+
+        .admin-shell {
+            width: 100%;
+            max-width: 760px;
+        }
+
+        .admin-card {
+            background: rgba(255, 255, 255, 0.055);
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+
+        .admin-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .admin-kicker {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--teal);
+            margin-bottom: 6px;
+        }
+
+        .admin-title {
+            font-family: var(--head);
+            font-size: clamp(24px, 4vw, 34px);
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .admin-desc {
+            color: var(--text2);
+            font-size: 14px;
+            line-height: 1.65;
+            max-width: 560px;
+        }
+
+        .admin-status {
+            background: rgba(0, 230, 118, 0.1);
+            border: 1px solid rgba(0, 230, 118, 0.35);
+            color: var(--green);
+            border-radius: 999px;
+            padding: 7px 14px;
+            font-size: 12px;
+            font-weight: 900;
+            white-space: nowrap;
+        }
+
+        .admin-login-box {
+            margin-top: 18px;
+            background: rgba(0, 0, 0, 0.18);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 18px;
+        }
+
+        .admin-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 900;
+            color: var(--text2);
+            margin-bottom: 8px;
+        }
+
+        .admin-input-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .admin-input {
+            flex: 1;
+            min-width: 220px;
+            background: var(--card2);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 13px 15px;
+            color: var(--text);
+            font-family: var(--font);
+            font-size: 15px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .admin-input:focus {
+            border-color: var(--teal);
+            box-shadow: var(--glow-teal);
+        }
+
+        .admin-error {
+            margin-top: 10px;
+            min-height: 18px;
+            font-size: 12px;
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .admin-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .admin-action-card {
+            background: rgba(255, 255, 255, 0.045);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 18px;
+        }
+
+        .admin-action-title {
+            font-weight: 900;
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .admin-action-text {
+            color: var(--text2);
+            font-size: 13px;
+            line-height: 1.55;
+            margin-bottom: 14px;
+        }
+
+        .admin-hidden {
+            display: none !important;
+        }
+
+        .admin-footer {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            color: var(--text2);
+            font-size: 12px;
+        }
+
+        .admin-footer a {
+            color: var(--teal);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .admin-footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media(max-width:640px) {
+            .admin-card {
+                padding: 22px 18px;
+                border-radius: 22px;
+            }
+
+            .admin-actions-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-input-row .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="starfield"></canvas>
+
+    <main class="admin-page">
+        <section class="admin-shell">
+            <div class="admin-card">
+                <div class="admin-top">
+                    <div>
+                        <div class="admin-kicker">Admin Area</div>
+                        <h1 class="admin-title">AI Registrations</h1>
+                        <p class="admin-desc">
+                            Registration data is now saved directly to your Google Sheet. This page only gives the
+                            organizer quick access to the live sheet.
+                        </p>
+                    </div>
+
+                    <div class="admin-status">Google Sheet Connected</div>
+                </div>
+
+                <div id="loginBox" class="admin-login-box">
+                    <label class="admin-label" for="adminPassword">Admin Password</label>
+
+                    <div class="admin-input-row">
+                        <input id="adminPassword" class="admin-input" type="password" placeholder="Enter admin password"
+                            autocomplete="off" />
+
+                        <button class="btn btn-primary" type="button" onclick="unlockAdmin()">
+                            Unlock
+                        </button>
+                    </div>
+
+                    <div class="admin-error" id="adminError"></div>
+                </div>
+
+                <div id="adminContent" class="admin-hidden">
+                    <div class="admin-actions-grid">
+                        <div class="admin-action-card">
+                            <div class="admin-action-title">Open Live Google Sheet</div>
+                            <p class="admin-action-text">
+                                View all registrations in real time. New form submissions will appear automatically in
+                                your Sheet.
+                            </p>
+                            <button class="btn btn-primary btn-sm" type="button" onclick="openGoogleSheet()">
+                                Open Sheet
+                            </button>
+                        </div>
+
+                        <div class="admin-action-card">
+                            <div class="admin-action-title">Back to Game</div>
+                            <p class="admin-action-text">
+                                Return to the registration page and continue testing the student/teacher journey.
+                            </p>
+                            <button class="btn btn-secondary btn-sm" type="button" onclick="goBackToGame()">
+                                Back to Registration
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="admin-footer">
+                        <span>Data source: Google Sheets</span>
+                        <a href="index.html">Open index.html</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script>
+        const ADMIN_PASSWORD_BASE64 = 'QUkyTzI2';
+        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1CCG5liteLRMg5uCtjPYBcjCs71xzkhjHrFCd1P6SAKA/edit?gid=0#gid=0';
+
+        function decodeBase64(value) {
+            try {
+                return atob(value);
+            } catch (error) {
+                return '';
+            }
+        }
+
+        function unlockAdmin() {
+            const input = document.getElementById('adminPassword');
+            const error = document.getElementById('adminError');
+            const loginBox = document.getElementById('loginBox');
+            const adminContent = document.getElementById('adminContent');
+
+            const enteredPassword = input.value.trim();
+            const realPassword = decodeBase64(ADMIN_PASSWORD_BASE64);
+
+            if (enteredPassword === realPassword) {
+                error.textContent = '';
+                input.value = '';
+                loginBox.classList.add('admin-hidden');
+                adminContent.classList.remove('admin-hidden');
+            } else {
+                error.textContent = 'Incorrect password.';
+                input.value = '';
+                input.focus();
+            }
+        }
+
+        function openGoogleSheet() {
+            if (!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes('PASTE_YOUR_GOOGLE_SHEET_URL_HERE')) {
+                alert('Please paste your Google Sheet URL inside admin.html first.');
+                return;
+            }
+
+            window.open(GOOGLE_SHEET_URL, '_blank', 'noopener');
+        }
+
+        function goBackToGame() {
+            window.location.href = 'index.html';
+        }
+
+        document.getElementById('adminPassword').addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                unlockAdmin();
+            }
+        });
+
+        /* Simple starfield for admin page only */
+        (function () {
+            const canvas = document.getElementById('starfield');
+
+            if (!canvas) {
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            let stars = [];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                createStars();
+            }
+
+            function createStars() {
+                stars = [];
+
+                for (let i = 0; i < 140; i++) {
+                    stars.push({
+                        x: Math.random() * canvas.width, y: Math.random() * canvas.height, r:
+                            Math.random() * 1.6 + 0.3, a: Math.random(), da: (0.003 + Math.random() * 0.006) * (Math.random() < 0.5 ? 1 :
+                                -1)
+                    });
+                }
+            } function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); stars.forEach(function (star) {
+                    star.a += star.da; if (star.a <= 0 || star.a >= 1) {
+                        star.da *= -1;
+                    }
+
+                    ctx.beginPath();
+                    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,' + star.a + ')';
+                    ctx.fill();
+                });
+
+                requestAnimationFrame(draw);
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+            draw();
+        })();
+    </script>
+</body>
+
+</html>

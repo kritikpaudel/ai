@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>AI Hero's Journey — Teacher Edition</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <!-- STARFIELD -->
+    <canvas id="starfield"></canvas>
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- SOUND TOGGLE -->
+    <button class="sound-btn" id="soundBtn" title="Toggle Sound" type="button">🔊</button>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- SCREEN: REGISTRATION -->
+    <div class="screen" id="screen-register">
+        <div class="register-card">
+            <h1 class="register-title">🤖 AI Hero's Journey</h1>
+            <p class="register-sub">Please register before you begin your adventure!</p>
+
+            <div class="reg-field" id="regFieldName">
+                <label for="regFullName">Full Name</label>
+                <input id="regFullName" type="text" placeholder="e.g. Asha Shrestha" maxlength="60"
+                    autocomplete="name" />
+                <div class="reg-error-msg" id="regErrName"></div>
+            </div>
+
+            <div class="reg-field" id="regFieldEmail">
+                <label for="regEmail">Email Address</label>
+                <input id="regEmail" type="email" placeholder="e.g. asha@email.com" maxlength="80"
+                    autocomplete="email" />
+                <div class="reg-error-msg" id="regErrEmail"></div>
+            </div>
+
+            <div class="reg-field" id="regFieldSchool">
+                <label for="regSchool">School Name</label>
+                <input id="regSchool" type="text" placeholder="e.g. Rosewood School" maxlength="80"
+                    autocomplete="organization" />
+                <div class="reg-error-msg" id="regErrSchool"></div>
+            </div>
+
+            <div class="reg-field" id="regFieldPhone">
+                <label for="regPhone">Contact Number</label>
+                <input id="regPhone" type="tel" placeholder="e.g. 98XXXXXXXX" maxlength="20" autocomplete="tel" />
+                <div class="reg-error-msg" id="regErrPhone"></div>
+            </div>
+
+            <div class="reg-submit-row">
+                <button class="btn btn-primary" type="button" onclick="submitRegistration()">
+                    Register &amp; Continue
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SCREEN: WELCOME -->
+    <div class="screen hidden" id="screen-welcome">
+        <div class="welcome-hero">
+            <span class="hero-mascot">🤖</span>
+
+            <h1 class="game-logo">AI Hero's Journey</h1>
+            <p class="game-sub">Teacher Edition · AI Literacy Adventure</p>
+
+            <p id="welcomeGreeting" class="welcome-greeting"></p>
+
+            <input type="hidden" id="playerNameInput" maxlength="60" />
+
+            <div class="welcome-btns welcome-main-actions">
+                <button class="btn btn-primary" type="button" onclick="startGame()">
+                    🚀 Begin Adventure
+                </button>
+
+                <button class="btn btn-secondary" type="button" onclick="showHowToPlay()">
+                    📖 How to Play
+                </button>
+            </div>
+
+            <div class="welcome-btns" style="margin-top:12px">
+                <button class="btn btn-secondary btn-sm" type="button" onclick="registerAsNewParticipant()">
+                    Register as New Participant
+                </button>
+            </div>
+
+            <div class="welcome-stats">
+                <div class="stat-pill"><span>5</span> Missions</div>
+                <div class="stat-pill"><span>5</span> Badges</div>
+                <div class="stat-pill"><span>1</span> Celebration</div>
+            </div>
+
+            <p class="welcome-note">
+                Designed for Teachers · Grades don't matter, learning does ✨
+            </p>
+        </div>
+    </div>
+
+    <!-- SCREEN: LEVEL SELECT -->
+    <div class="screen hidden" id="screen-map">
+        <div class="map-header">
+            <h1 class="map-title">🎮 Level Select</h1>
+
+            <div class="player-info">
+                <div class="player-avatar" id="mapAvatar">🤖</div>
+                <div>
+                    <div class="player-name" id="mapPlayerName">Hero</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="global-progress">
+            <div class="progress-track">
+                <div class="progress-fill" id="globalProgress"></div>
+            </div>
+
+            <div class="progress-label">
+                <span id="progressLevelsLabel">0 of 5 Levels Completed</span>
+                <span id="progressPct">0%</span>
+            </div>
+        </div>
+
+        <div class="total-stars-row">
+            ⭐ Total Stars: <span id="mapScore">0</span>
+        </div>
+
+        <div class="level-path" id="levelPath">
+            <!-- Level cards are injected by script.js -->
+        </div>
+
+        <p class="map-caption">
+            Complete a level to unlock the next one. Replay any level you've already finished to improve your stars.
+        </p>
+
+        <div class="badges-shelf" id="badgesShelf">
+            <!-- Badges are injected by script.js -->
+        </div>
+    </div>
+
+    <!-- SCREEN: MISSION -->
+    <div class="screen hidden" id="screen-mission">
+        <div class="mission-topbar">
+            <div class="mission-title-bar">
+                <button class="btn btn-secondary btn-sm mission-map-btn" type="button" onclick="goToMap()">
+                    ← Map
+                </button>
+
+                <span class="mission-icon-sm" id="missionIconSm"></span>
+                <span class="mission-name" id="missionNameSm"></span>
+            </div>
+
+            <div class="mission-progress-mini">
+                <div class="mini-prog-track">
+                    <div class="mini-prog-fill" id="miniProgFill"></div>
+                </div>
+
+                <span class="mini-prog-label" id="miniProgLabel">0 / 0</span>
+            </div>
+        </div>
+
+        <div class="mission-body" id="missionBody">
+            <!-- Mission content is injected by script.js -->
+        </div>
+    </div>
+
+    <!-- SCREEN: RESULTS -->
+    <div class="screen hidden" id="screen-results">
+        <div class="celebration-panel" id="celebrationPanel">
+            <span class="celebration-badge" id="celebrationBadge">🎉</span>
+
+            <div class="celebration-title" id="celebrationTitle">
+                You Nailed the Journey
+            </div>
+
+            <div class="celebration-subtitle" id="celebrationSubtitle">
+                AI confidence unlocked
+            </div>
+
+            <p class="celebration-message" id="celebrationMessage"></p>
+
+            <div class="celebration-points">
+                <div class="celebration-point">
+                    <span class="point-icon">🧠</span>
+                    <div class="point-title">Prompt thinking</div>
+                    <div class="point-text">
+                        You learned how context, role, and structure change AI results.
+                    </div>
+                </div>
+
+                <div class="celebration-point">
+                    <span class="point-icon">🎯</span>
+                    <div class="point-title">Better choices</div>
+                    <div class="point-text">
+                        You practiced spotting useful outputs, safe habits, and effective prompting.
+                    </div>
+                </div>
+
+                <div class="celebration-point">
+                    <span class="point-icon">🏅</span>
+                    <div class="point-title">Mission complete</div>
+                    <div class="point-text">
+                        You finished the full journey and earned your place as an AI-ready educator.
+                    </div>
+                </div>
+            </div>
+
+            <div class="celebration-stars" id="celebrationStars">⭐⭐⭐⭐⭐</div>
+
+            <div class="celebration-score" id="celebrationStats"></div>
+
+            <div class="result-btns">
+                <button class="btn btn-primary celebration-btn" type="button" onclick="restartGame()">
+                    🔄 Play Again
+                </button>
+
+                <button class="btn btn-secondary celebration-btn" type="button" onclick="goToMap()">
+                    🗺 Back to Map
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MISSION COMPLETE OVERLAY -->
+    <div class="complete-overlay" id="completeOverlay">
+        <div class="complete-card">
+            <span class="complete-icon" id="completeIcon">🎉</span>
+
+            <div class="complete-title" id="completeTitle">
+                Mission Complete!
+            </div>
+
+            <div class="complete-stars" id="completeStars">
+                ⭐⭐⭐
+            </div>
+
+            <p class="complete-message" id="completeMessage"></p>
+
+            <button class="btn btn-primary" id="completeContinueBtn" type="button" onclick="dismissComplete()">
+                Continue Journey →
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js?v=6" defer></script>
+</body>
+
+</html>
