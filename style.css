@@ -3338,3 +3338,324 @@ body {
         font-size: 16px;
     }
 }
+
+/* ═══════════════════════════════════════════
+   FINAL MOBILE POLISH PATCH
+   Result screen + phone gameplay smoothness
+═══════════════════════════════════════════ */
+
+/* Global smoothness */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hide harsh mobile scrollbars but keep scrolling */
+.screen,
+.mission-body {
+    scrollbar-width: none;
+}
+
+.screen::-webkit-scrollbar,
+.mission-body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+/* Result screen should scroll naturally */
+#screen-results {
+    justify-content: flex-start !important;
+    align-items: center !important;
+    overflow-y: auto !important;
+    padding: 18px 12px calc(90px + env(safe-area-inset-bottom)) !important;
+}
+
+/* Celebration card must not clip inner content */
+.celebration-panel {
+    overflow: visible !important;
+    margin: 0 auto 80px !important;
+    width: 100%;
+    max-width: min(900px, calc(100vw - 24px));
+}
+
+/* Remove sticky/floating result buttons */
+.result-btns {
+    position: static !important;
+    bottom: auto !important;
+    z-index: auto !important;
+    width: 100%;
+    margin-top: 22px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+}
+
+/* Make result buttons sit cleanly at the bottom */
+.result-btns .btn {
+    min-height: 54px;
+    justify-content: center;
+}
+
+/* More polished result statistics */
+.celebration-score {
+    margin-top: 18px;
+    margin-bottom: 8px;
+}
+
+/* Prevent star row overflow */
+.celebration-stars {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    line-height: 1.45;
+}
+
+/* Better phone result layout */
+@media (max-width: 700px) {
+    #screen-results {
+        padding-top: 16px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+        padding-bottom: calc(100px + env(safe-area-inset-bottom)) !important;
+    }
+
+    .celebration-panel {
+        max-width: 100%;
+        padding: 24px 18px 28px !important;
+        border-radius: 30px !important;
+        margin-bottom: 90px !important;
+    }
+
+    .celebration-badge {
+        font-size: 58px !important;
+        margin-bottom: 6px !important;
+    }
+
+    .celebration-title {
+        font-size: clamp(32px, 9vw, 46px) !important;
+        line-height: 1.12 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .celebration-subtitle {
+        font-size: clamp(20px, 6vw, 28px) !important;
+        line-height: 1.25 !important;
+        margin-bottom: 16px !important;
+    }
+
+    .celebration-message {
+        font-size: 16px !important;
+        line-height: 1.65 !important;
+        margin-bottom: 22px !important;
+    }
+
+    .celebration-points {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        margin: 20px 0 !important;
+    }
+
+    .celebration-point {
+        padding: 18px 16px !important;
+        border-radius: 22px !important;
+    }
+
+    .celebration-point .point-icon {
+        font-size: 34px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .celebration-point .point-title {
+        font-size: 18px !important;
+        margin-bottom: 8px !important;
+    }
+
+    .celebration-point .point-text {
+        font-size: 15px !important;
+        line-height: 1.55 !important;
+    }
+
+    .celebration-stars {
+        font-size: clamp(21px, 6vw, 30px) !important;
+        letter-spacing: 1px !important;
+        margin: 18px 0 !important;
+    }
+
+    .celebration-score {
+        gap: 10px !important;
+        margin-bottom: 18px !important;
+    }
+
+    .celebration-chip {
+        font-size: 13px !important;
+        padding: 9px 13px !important;
+    }
+
+    .result-btns {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    .result-btns .btn,
+    .celebration-btn {
+        width: 100% !important;
+        min-width: 0 !important;
+        font-size: 17px !important;
+        padding: 15px 20px !important;
+    }
+}
+
+/* Extra small phone result screen */
+@media (max-width: 420px) {
+    .celebration-panel {
+        padding: 22px 14px 26px !important;
+        border-radius: 26px !important;
+    }
+
+    .celebration-title {
+        font-size: clamp(30px, 9.5vw, 40px) !important;
+    }
+
+    .celebration-message {
+        font-size: 15.5px !important;
+    }
+
+    .celebration-point {
+        padding: 16px 14px !important;
+    }
+
+    .celebration-stars {
+        font-size: 21px !important;
+    }
+}
+
+/* Mission screens should scroll from anywhere naturally */
+#screen-mission {
+    overflow: hidden !important;
+}
+
+.mission-body {
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+    touch-action: pan-y;
+}
+
+/* Make game content easier to scroll/tap on phones */
+@media (max-width: 700px) {
+    .mission-body {
+        padding: 18px 10px calc(150px + env(safe-area-inset-bottom)) !important;
+        gap: 18px !important;
+    }
+
+    .mission-instruction {
+        width: 100%;
+        padding: 16px 14px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mission-instruction h2 {
+        font-size: clamp(28px, 8vw, 36px) !important;
+        line-height: 1.15;
+    }
+
+    .mission-instruction p {
+        font-size: 16px !important;
+        line-height: 1.55 !important;
+    }
+
+    .scenario-card,
+    .tool-card,
+    .sort-card,
+    .costar-chip,
+    .lab-output-card,
+    .quality-zone {
+        touch-action: manipulation;
+    }
+
+    .scenario-card,
+    .tool-card {
+        min-height: 82px;
+        border-radius: 20px;
+        padding: 16px;
+        font-size: 16px;
+        line-height: 1.45;
+    }
+
+    .match-layout,
+    .prompt-layout,
+    .lab-layout {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .scenario-list,
+    .tool-list {
+        gap: 12px;
+    }
+}
+
+/* Better mobile topbar */
+@media (max-width: 700px) {
+    .mission-topbar {
+        padding: 12px !important;
+        gap: 10px !important;
+        backdrop-filter: blur(14px);
+    }
+
+    .mission-title-bar {
+        width: 100%;
+        display: grid !important;
+        grid-template-columns: auto auto 1fr;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mission-map-btn {
+        padding: 10px 16px !important;
+        border-radius: 999px !important;
+    }
+
+    .mission-name {
+        font-size: 20px !important;
+        line-height: 1.15 !important;
+    }
+
+    .mission-progress-mini {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 14px !important;
+    }
+
+    .mini-prog-track {
+        flex: 1;
+        max-width: 260px;
+    }
+}
+
+/* Sound button should not dominate mobile UI */
+@media (max-width: 700px) {
+    .sound-btn {
+        width: 42px !important;
+        height: 42px !important;
+        right: 12px !important;
+        bottom: calc(12px + env(safe-area-inset-bottom)) !important;
+        opacity: 0.55;
+    }
+
+    .sound-btn:hover {
+        opacity: 1;
+    }
+}
