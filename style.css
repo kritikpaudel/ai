@@ -2763,3 +2763,578 @@ body.admin-body {
         min-width: 100%;
     }
 }
+
+/* ═══════════════════════════════════════════
+   PHONE-FIRST UI SMOOTHNESS PATCH
+═══════════════════════════════════════════ */
+
+html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: geometricPrecision;
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+*:focus {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: 2px solid rgba(0, 212, 200, 0.9);
+    outline-offset: 4px;
+}
+
+/* Make every screen use modern mobile viewport height */
+.screen {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Keep these screens centered */
+#screen-register,
+#screen-welcome {
+    justify-content: center;
+}
+
+/* Long screens should start from top, not center */
+#screen-map,
+#screen-results {
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 28px;
+    padding-bottom: calc(110px + env(safe-area-inset-bottom));
+}
+
+/* Result page should never clip */
+#screen-results {
+    overflow-y: auto;
+}
+
+.celebration-panel {
+    overflow: visible;
+    margin: 16px auto 90px;
+    max-width: min(980px, calc(100vw - 28px));
+}
+
+/* Better result page spacing */
+.celebration-title {
+    line-height: 1.15;
+}
+
+.celebration-message {
+    max-width: 680px;
+}
+
+.celebration-stars {
+    max-width: 100%;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+/* Sticky result buttons on phone */
+.result-btns {
+    margin-top: 20px;
+}
+
+/* Mission screen should scroll naturally */
+#screen-mission {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+}
+
+.mission-topbar {
+    position: relative;
+    z-index: 50;
+    backdrop-filter: blur(14px);
+}
+
+.mission-body {
+    height: calc(100dvh - 74px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    padding-bottom: calc(140px + env(safe-area-inset-bottom));
+}
+
+/* Draggables should not block scrolling on mobile */
+.draggable {
+    touch-action: pan-y;
+}
+
+/* Tap-to-play selection state */
+.tap-selected {
+    border-color: var(--teal) !important;
+    box-shadow: 0 0 0 3px rgba(0, 212, 200, 0.28), 0 14px 34px rgba(0, 0, 0, 0.35) !important;
+    transform: scale(1.03) !important;
+    position: relative;
+}
+
+.tap-selected::after {
+    content: "Tap target";
+    position: absolute;
+    top: -10px;
+    right: -8px;
+    background: var(--teal);
+    color: #06111f;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 4px 8px;
+    border-radius: 999px;
+    box-shadow: 0 8px 20px rgba(0, 212, 200, 0.35);
+}
+
+/* Mission 1 placeholder fix */
+.sort-placeholder {
+    color: var(--text2);
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    display: block;
+    opacity: 0.85;
+}
+
+/* Prevent dropped cards from breaking */
+.sort-items .sort-card {
+    min-width: 132px;
+    justify-content: flex-start;
+}
+
+.sort-card span {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* More premium cards */
+.sort-zone,
+.tool-card,
+.scenario-card,
+.prompt-box,
+.output-box,
+.lab-output-card,
+.quality-zone,
+.celebration-point {
+    backdrop-filter: blur(10px);
+}
+
+/* Cleaner map */
+.level-path {
+    max-width: 600px;
+    padding-bottom: 48px;
+}
+
+.level-card {
+    max-width: 460px;
+    min-height: 92px;
+    padding: 16px 22px;
+    background: rgba(10, 32, 58, 0.82);
+    border-color: rgba(0, 212, 200, 0.22);
+}
+
+.level-card.completed {
+    background: rgba(0, 212, 200, 0.06);
+    border-color: rgba(0, 230, 118, 0.42);
+}
+
+.level-node {
+    width: 68px;
+    height: 68px;
+}
+
+.level-title {
+    font-size: 17px;
+}
+
+.level-checkmark {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+}
+
+.level-connector {
+    height: 64px;
+    margin: 0;
+}
+
+/* Smooth hover only where hover exists */
+@media (hover: hover) {
+
+    .btn:hover,
+    .level-card:hover,
+    .scenario-card:hover,
+    .tool-card:hover,
+    .lab-output-card:hover,
+    .sort-card:hover {
+        will-change: transform;
+    }
+}
+
+/* Main phone layout */
+@media (max-width: 700px) {
+    .screen {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    #screen-results {
+        padding-top: 18px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: calc(120px + env(safe-area-inset-bottom));
+    }
+
+    .celebration-panel {
+        width: 100%;
+        max-width: calc(100vw - 20px);
+        padding: 24px 18px 28px;
+        border-radius: 30px;
+        margin: 0 auto 110px;
+    }
+
+    .celebration-badge {
+        font-size: 64px;
+        margin-bottom: 8px;
+    }
+
+    .celebration-title {
+        font-size: clamp(34px, 10vw, 54px);
+        line-height: 1.12;
+        margin-bottom: 14px;
+    }
+
+    .celebration-subtitle {
+        font-size: clamp(22px, 6.5vw, 32px);
+        line-height: 1.2;
+    }
+
+    .celebration-message {
+        font-size: 18px;
+        line-height: 1.65;
+        margin-bottom: 22px;
+    }
+
+    .celebration-points {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin: 22px 0;
+    }
+
+    .celebration-point {
+        padding: 20px 18px;
+        border-radius: 24px;
+    }
+
+    .celebration-point .point-icon {
+        font-size: 36px;
+    }
+
+    .celebration-point .point-title {
+        font-size: 19px;
+    }
+
+    .celebration-point .point-text {
+        font-size: 16px;
+        line-height: 1.5;
+    }
+
+    .celebration-stars {
+        font-size: clamp(22px, 7vw, 32px);
+        letter-spacing: 1px;
+        margin: 18px 0;
+    }
+
+    .celebration-score {
+        gap: 10px;
+    }
+
+    .celebration-chip {
+        font-size: 13px;
+        padding: 9px 13px;
+    }
+
+    .result-btns {
+        position: sticky;
+        bottom: calc(12px + env(safe-area-inset-bottom));
+        z-index: 40;
+        width: 100%;
+        padding: 10px;
+        border-radius: 26px;
+        background: rgba(15, 23, 41, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(16px);
+    }
+
+    .result-btns .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Mission topbar */
+    .mission-topbar {
+        padding: 12px 12px;
+        gap: 10px;
+    }
+
+    .mission-title-bar {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .mission-name {
+        font-size: 20px;
+        line-height: 1.15;
+    }
+
+    .mission-icon-sm {
+        font-size: 26px;
+    }
+
+    .mission-map-btn {
+        padding: 10px 16px;
+        border-radius: 999px;
+    }
+
+    .mission-progress-mini {
+        width: 100%;
+        justify-content: center;
+        padding: 8px 14px;
+    }
+
+    .mini-prog-track {
+        flex: 1;
+        max-width: 260px;
+    }
+
+    .mission-body {
+        height: calc(100dvh - 126px);
+        padding: 18px 10px calc(140px + env(safe-area-inset-bottom));
+        gap: 18px;
+    }
+
+    .mission-instruction {
+        width: 100%;
+        max-width: 100%;
+        padding: 18px 16px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mission-instruction h2 {
+        font-size: clamp(28px, 8vw, 38px);
+        line-height: 1.15;
+    }
+
+    .mission-instruction p {
+        font-size: 16px;
+        line-height: 1.55;
+    }
+
+    /* Mission 1 */
+    .cards-bank {
+        width: 100%;
+        max-width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .sort-card {
+        min-height: 68px;
+        justify-content: center;
+        text-align: center;
+        border-radius: 18px;
+        font-size: 15px;
+        line-height: 1.25;
+        padding: 12px 10px;
+    }
+
+    .sort-card-icon {
+        font-size: 24px;
+    }
+
+    .sort-arena {
+        width: 100%;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .sort-zone {
+        min-height: 230px;
+        padding: 18px;
+        border-radius: 26px;
+    }
+
+    .sort-zone-header {
+        font-size: 26px;
+        margin-bottom: 16px;
+    }
+
+    .sort-items {
+        gap: 10px;
+    }
+
+    .sort-items .sort-card {
+        min-width: calc(50% - 6px);
+    }
+
+    .sort-placeholder {
+        font-size: 16px;
+        padding: 16px;
+    }
+
+    /* Mission 2 */
+    .match-layout {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .scenario-list,
+    .tool-list {
+        gap: 12px;
+    }
+
+    .scenario-card,
+    .tool-card {
+        min-height: 82px;
+        border-radius: 20px;
+        padding: 16px;
+        font-size: 16px;
+        line-height: 1.45;
+    }
+
+    .tool-info .tool-name {
+        font-size: 17px;
+    }
+
+    .tool-info .tool-hint {
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    /* Mission 3 and 4 */
+    .prompt-layout,
+    .lab-layout {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .prompt-box,
+    .output-box,
+    .lab-output-card,
+    .quality-zone {
+        border-radius: 22px;
+        padding: 18px;
+    }
+
+    .lab-outputs,
+    .lab-quality-zones,
+    .output-compare {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .lab-output-title {
+        font-size: 17px;
+    }
+
+    .lab-output-text {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+    .quality-label {
+        font-size: 17px;
+    }
+
+    .lab-clue,
+    .lab-zone-note {
+        font-size: 13px;
+    }
+
+    /* Safety */
+    .safety-hud {
+        border-radius: 22px;
+        padding: 14px;
+    }
+
+    #safety-arena {
+        height: 420px;
+        border-radius: 24px;
+    }
+
+    .falling-item {
+        max-width: 180px;
+        font-size: 12px;
+    }
+
+    .sound-btn {
+        width: 46px;
+        height: 46px;
+        right: 14px;
+        bottom: calc(14px + env(safe-area-inset-bottom));
+        opacity: 0.9;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 420px) {
+    .mission-name {
+        font-size: 18px;
+    }
+
+    .mission-body {
+        height: calc(100dvh - 124px);
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .cards-bank {
+        gap: 10px;
+    }
+
+    .sort-card {
+        min-height: 64px;
+        font-size: 14px;
+    }
+
+    .sort-zone {
+        min-height: 220px;
+    }
+
+    .celebration-panel {
+        padding: 22px 14px 26px;
+    }
+
+    .celebration-title {
+        font-size: clamp(32px, 10vw, 44px);
+    }
+
+    .celebration-message {
+        font-size: 16px;
+    }
+}

@@ -1162,9 +1162,7 @@ function buildMission1(body) {
                     🤖 AI
                 </div>
                 <div class="sort-items" id="items-ai">
-    <span class="sort-placeholder">
-        Drop AI items here
-    </span>
+    <span class="sort-placeholder">Drop AI items here</span>
 </div>
             </div>
 
@@ -1173,10 +1171,8 @@ function buildMission1(body) {
                     <div class="zone-dot" style="background:var(--orange)"></div>
                     🚫 Not AI
                 </div>
-                <div class="sort-items" id="items-notai">
-    <span class="sort-placeholder">
-        Drop non-AI items here
-    </span>
+               <div class="sort-items" id="items-notai">
+    <span class="sort-placeholder">Drop non-AI items here</span>
 </div>
             </div>
         </div>
